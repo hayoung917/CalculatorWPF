@@ -146,10 +146,12 @@ namespace CalculatorApp.ViewModels
                 Week = string.Concat((Math.Truncate((result / 168) * 1000) / 1000), "w");
                 Second = string.Concat((Math.Truncate((result * 3600) * 1000) / 1000), "s");
             }
-            List<CalculatorModel> temp = new List<CalculatorModel>();
-            temp.Add(new CalculatorModel() { CalcValue = Day });
-            temp.Add(new CalculatorModel() { CalcValue = Week });
-            temp.Add(new CalculatorModel() { CalcValue = Second });
+            List<CalculatorModel> temp = new List<CalculatorModel>
+            {
+                new CalculatorModel() { CalcValue = Day },
+                new CalculatorModel() { CalcValue = Week },
+                new CalculatorModel() { CalcValue = Second }
+            };
             Results = temp;
         }
 
@@ -163,10 +165,12 @@ namespace CalculatorApp.ViewModels
                 Week = string.Concat((Math.Truncate((result / 7) * 1000) / 1000), "w");
                 Second = string.Concat((Math.Truncate((result * 86400) * 1000) / 1000), "s");
             }
-            List<CalculatorModel> temp = new List<CalculatorModel>();
-            temp.Add(new CalculatorModel() { CalcValue = Day });
-            temp.Add(new CalculatorModel() { CalcValue = Week });
-            temp.Add(new CalculatorModel() { CalcValue = Second });
+            List<CalculatorModel> temp = new List<CalculatorModel>
+            {
+                new CalculatorModel() { CalcValue = Day },
+                new CalculatorModel() { CalcValue = Week },
+                new CalculatorModel() { CalcValue = Second }
+            };
             Results = temp;
         }
 
@@ -180,10 +184,12 @@ namespace CalculatorApp.ViewModels
                 Week = string.Concat(NumOutput, "w");
                 Second = string.Concat((Math.Truncate((result * 604800) * 1000) / 1000), "s");
             }
-            List<CalculatorModel> temp = new List<CalculatorModel>();
-            temp.Add(new CalculatorModel() { CalcValue = Day });
-            temp.Add(new CalculatorModel() { CalcValue = Week });
-            temp.Add(new CalculatorModel() { CalcValue = Second });
+            List<CalculatorModel> temp = new List<CalculatorModel>
+            {
+                new CalculatorModel() { CalcValue = Day },
+                new CalculatorModel() { CalcValue = Week },
+                new CalculatorModel() { CalcValue = Second }
+            };
             Results = temp;
         }
 
@@ -197,10 +203,12 @@ namespace CalculatorApp.ViewModels
                 Week = string.Concat((Math.Truncate((result * 52.143) * 1000) / 1000), "w");
                 Second = string.Concat((Math.Truncate((result * 3.154) * 1000) / 1000), "s");
             }
-            List<CalculatorModel> temp = new List<CalculatorModel>();
-            temp.Add(new CalculatorModel() { CalcValue = Day });
-            temp.Add(new CalculatorModel() { CalcValue = Week });
-            temp.Add(new CalculatorModel() { CalcValue = Second });
+            List<CalculatorModel> temp = new List<CalculatorModel>
+            {
+                new CalculatorModel() { CalcValue = Day },
+                new CalculatorModel() { CalcValue = Week },
+                new CalculatorModel() { CalcValue = Second }
+            };
             Results = temp;
         }
 

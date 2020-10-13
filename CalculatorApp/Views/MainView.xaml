@@ -12,24 +12,32 @@
     <UserControl.Resources>
         <cvt:IsWidthLessThanHeightConvert x:Key="IsWidthLessThanHeight"/>
 
-        <ControlTemplate x:Key="SelfButton" TargetType="Button">
-            <Border Name="border"
-                    CornerRadius="3"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    Background="{TemplateBinding Background}">
-                <ContentPresenter Name="content"
-                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                  Content="{TemplateBinding Content}"
-                                  ContentTemplate="{TemplateBinding ContentTemplate}"/>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="border" Property="Background" Value="LightSkyBlue"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
+        <Style x:Key="SelfButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Terminal"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border"
+                                CornerRadius="3"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="LightSkyBlue"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <Style x:Key="ResponsiveUI" TargetType="UniformGrid">
             <Style.Resources/>
@@ -59,20 +67,9 @@
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="baseStyle" TargetType="{x:Type Control}">
-            <Setter Property="FontFamily" Value="Terminal"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
         <Style x:Key="baseStyle.tb" TargetType="{x:Type TextBlock}">
             <Setter Property="FontFamily" Value="Terminal"/>
             <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-        <Style x:Key="NumButton" TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}">
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="Template" Value="{StaticResource SelfButton}"/>
-        </Style>
-        <Style x:Key="CalcButton" TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}">
-            <Setter Property="FontSize" Value="30"/>
         </Style>
         <Style x:Key="TextBlock.Title" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource baseStyle.tb}">
             <Setter Property="FontSize" Value="20"/>
@@ -108,7 +105,7 @@
                       ItemsSource="{Binding ComboItems}"
                       SelectedItem="{Binding SelectedType}"/>
 
-            <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <StackPanel Grid.Row="3">
                 <ItemsControl ItemsSource="{Binding Results}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -141,80 +138,67 @@
             </Grid.RowDefinitions>
 
             <Button Grid.Column="1"
-                    Style="{StaticResource CalcButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="CE"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding ClearCommand}"/>
-            <Button Grid.Column="2"
-                    Template="{StaticResource SelfButton}"
-                    Command="{Binding BackspaceCommand}">
+            <Button Grid.Column="2" Command="{Binding BackspaceCommand}">
                 <Image Source="/Resources/iconfinder_backspace_4879862 (1).png"/>
             </Button>
 
             <Button Grid.Row="1"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="7"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding InputCommand}"
                     CommandParameter="7"/>
             <Button Grid.Row="1" Grid.Column="1"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="8"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding InputCommand}"
                     CommandParameter="8"/>
 
             <Button Grid.Row="1" Grid.Column="2"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="9"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding InputCommand}"
                     CommandParameter="9"/>
 
             <Button Grid.Row="2"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="4"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding InputCommand}"
                     CommandParameter="4"/>
             <Button Grid.Row="2" Grid.Column="1"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="5"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding InputCommand}"
                     CommandParameter="5"/>
             <Button Grid.Row="2" Grid.Column="2"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="6"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding InputCommand}"
                     CommandParameter="6"/>
             <Button Grid.Row="3"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="1"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding InputCommand}"
                     CommandParameter="1"/>
             <Button Grid.Row="3" Grid.Column="1"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="2"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding InputCommand}"
                     CommandParameter="2"/>
             <Button Grid.Row="3" Grid.Column="2"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="3"
-                    Template="{StaticResource SelfButton}"
                     Command="{Binding InputCommand}"
                     CommandParameter="3"/>
             <Button Grid.Row="4" Grid.Column="1"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="0"
                     Command="{Binding InputCommand}"
-                    Template="{StaticResource SelfButton}"
                     CommandParameter="0"/>
             <Button Grid.Row="9" Grid.Column="2"
-                    Style="{StaticResource NumButton}"
+                    Style="{StaticResource SelfButton}"
                     Content="."
                     Command="{Binding InputCommand}"
                     CommandParameter="."/>
