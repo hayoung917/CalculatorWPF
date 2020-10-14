@@ -8,7 +8,6 @@
 
     public class MainViewModel : ViewModel
     {
-
         #region properties
         public ICommand InputCommand { get; private set; }
         public ICommand BackspaceCommand { get; private set; }
@@ -63,7 +62,6 @@
             int length = this.NumOutput.Length - 1;
 
             if (0 < length)
-
             {
                 this.NumOutput = this.NumOutput.Substring(0, length);
             }
@@ -85,7 +83,7 @@
             var temp = new List<TimeViewModel>();
             foreach (TimeViewModel result in resultList)
             {
-                if(result.OuputTimeUnit != this.SelectedComboType && result.CalcValue != 0)
+                if (result.OuputTimeUnit != this.SelectedComboType && result.CalcValue != 0)
                 {
                     temp.Add(result);
                 }

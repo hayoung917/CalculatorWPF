@@ -1,5 +1,8 @@
 ﻿namespace CalculatorApp.Models
 {
+    /// <summary>
+    /// 시간단위 입니다.
+    /// </summary>
     public enum TimeUnit
     {
         마이크로초,

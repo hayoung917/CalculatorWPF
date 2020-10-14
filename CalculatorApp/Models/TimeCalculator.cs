@@ -13,7 +13,7 @@
             {
                 double calculatedValue = Convert(input, baseUnit, timeUnit);
                 calculatedValue = Math.Round(calculatedValue, 3);
-                var result = new TimeViewModel() { CalcValue = calculatedValue, OuputTimeUnit = timeUnit.ToString()};
+                var result = new TimeViewModel() { CalcValue = calculatedValue, OuputTimeUnit = timeUnit.ToString() };
                 resultList.Add(result);
             }
             return resultList;

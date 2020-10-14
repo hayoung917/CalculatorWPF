@@ -133,7 +133,6 @@
                                            Text="{Binding OuputTimeUnit}"/>
                             </StackPanel>
                         </DataTemplate>
-
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
