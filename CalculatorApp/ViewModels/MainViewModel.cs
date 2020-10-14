@@ -1,12 +1,13 @@
-﻿using CalculatorApp.Models;
-using Saige.MVVM;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-
-namespace CalculatorApp.ViewModels
+﻿namespace CalculatorApp.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using CalculatorApp.Models;
+    using Saige.MVVM;
+
     public class MainViewModel : ViewModel
     {
 
@@ -15,100 +16,95 @@ namespace CalculatorApp.ViewModels
         public ICommand BackspaceCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
 
-        public ObservableCollection<string> ComboItems { get; set; }
 
-        private string numOutput;
+        private string _numOutput;
         public string NumOutput
         {
-            get => numOutput;
+            get => this._numOutput;
             set
             {
-                SetProperty(ref numOutput, value);
+                SetProperty(ref this._numOutput, value);
                 CalcHour();
             }
         }
 
-        private List<CalculatorModel> results;
-        public List<CalculatorModel> Results
+        private List<TimeViewModel> _results;
+        public List<TimeViewModel> Results
         {
-            get => results;
-            set => SetProperty(ref results, value);
+            get => this._results;
+            set => SetProperty(ref this._results, value);
         }
 
-        private string selectedType = "시간";
-        public string SelectedType
+        private TimeUnit _selectedComboType;
+        public string SelectedComboType
         {
-            get => selectedType;
+            get => this._selectedComboType.ToString();
             set
             {
-                SetProperty(ref selectedType, value);
-                if (selectedType.ToString() == "일")
-                {
-                    CalcDay();
-                }
-                else if (selectedType.ToString() == "시간")
+                this._selectedComboType = (TimeUnit)Enum.Parse(typeof(TimeUnit), value);
+                if (this._selectedComboType.ToString() == "시간")
                 {
                     CalcHour();
                 }
-                else if (selectedType.ToString() == "주")
+                else if (this._selectedComboType.ToString() == "일")
+                {
+                    CalcDay();
+                }
+                else if (this._selectedComboType.ToString() == "주")
                 {
                     CalcWeek();
                 }
-                else if (selectedType.ToString() == "년")
+                else if (this._selectedComboType.ToString() == "년")
                 {
                     CalcYear();
                 }
-                //else if (selectedType.ToString() == "분")
-                //{
-
-                //}
             }
         }
 
-        private string day;
+        private string _day;
         public string Day
         {
-            get => day;
-            set => SetProperty(ref day, value);
+            get => this._day;
+            set => SetProperty(ref this._day, value);
         }
 
-        private string week;
+        private string _week;
         public string Week
         {
-            get => week;
-            set => SetProperty(ref week, value);
+            get => this._week;
+            set => SetProperty(ref this._week, value);
         }
 
-        private string second;
+        private string _second;
         public string Second
         {
-            get => second;
-            set => SetProperty(ref second, value);
+            get => this._second;
+            set => SetProperty(ref this._second, value);
         }
         #endregion
 
-        private void InputNumber(string BtnNum)
+        private void InputNumber(string btnNum)
         {
-            NumOutput += BtnNum;
+            this.NumOutput += btnNum;
         }
 
         private void ClearNumber()
         {
-            NumOutput = " ";
+            this.NumOutput = " ";
         }
 
         private void BackspaceNumber()
         {
-            int length = NumOutput.Length - 1;
+            int length = this.NumOutput.Length - 1;
 
             if (0 < length)
 
             {
-                NumOutput = NumOutput.Substring(0, length);
+                this.NumOutput = this.NumOutput.Substring(0, length);
             }
             else
             {
-                NumOutput = " ";
+                this.NumOutput = " ";
             }
         }
 
@@ -119,97 +115,85 @@ namespace CalculatorApp.ViewModels
 
         private void InitControl()
         {
-            InputCommand = new RelayCommand<string>(InputNumber);
-            BackspaceCommand = new RelayCommand(BackspaceNumber);
-            ClearCommand = new RelayCommand(ClearNumber);
-
-            //콤보박스 아이템
-            ComboItems = new ObservableCollection<string>
-            {
-                //"마이크로초",
-                //"밀리초",
-                //"분",
-                "시간",
-                "일",
-                "주",
-                "년"
-            };
+            this.InputCommand = new RelayCommand<string>(InputNumber);
+            this.BackspaceCommand = new RelayCommand(BackspaceNumber);
+            this.ClearCommand = new RelayCommand(ClearNumber);
         }
+
 
         private void CalcHour()
         {
-            if (NumOutput != null)
+            if (this.NumOutput != null)
             {
-                double result;
-                double.TryParse(NumOutput, out result);
-                Day = string.Concat((Math.Truncate((result / 24) * 1000) / 1000),"d");
-                Week = string.Concat((Math.Truncate((result / 168) * 1000) / 1000), "w");
-                Second = string.Concat((Math.Truncate((result * 3600) * 1000) / 1000), "s");
+                _ = double.TryParse(this.NumOutput, out double result);
+                this.Day = string.Concat((Math.Truncate((result / 24) * 1000) / 1000),"d");
+                this.Week = string.Concat((Math.Truncate((result / 168) * 1000) / 1000), "w");
+                this.Second = string.Concat((Math.Truncate((result * 3600) * 1000) / 1000), "s");
             }
-            List<CalculatorModel> temp = new List<CalculatorModel>
+            var temp = new List<TimeViewModel>
             {
-                new CalculatorModel() { CalcValue = Day },
-                new CalculatorModel() { CalcValue = Week },
-                new CalculatorModel() { CalcValue = Second }
+                new TimeViewModel() { CalcValue = Day },
+                new TimeViewModel() { CalcValue = Week },
+                new TimeViewModel() { CalcValue = Second }
             };
-            Results = temp;
+            this.Results = temp;
         }
 
         private void CalcDay()
         {
-            if (NumOutput != null)
+            if (this.NumOutput != null)
             {
                 double result;
-                double.TryParse(NumOutput, out result);
-                Day = string.Concat(NumOutput, "d");
-                Week = string.Concat((Math.Truncate((result / 7) * 1000) / 1000), "w");
-                Second = string.Concat((Math.Truncate((result * 86400) * 1000) / 1000), "s");
+                double.TryParse(this.NumOutput, out result);
+                this.Day = string.Concat(this.NumOutput, "d");
+                this.Week = string.Concat((Math.Truncate((result / 7) * 1000) / 1000), "w");
+                this.Second = string.Concat((Math.Truncate((result * 86400) * 1000) / 1000), "s");
             }
-            List<CalculatorModel> temp = new List<CalculatorModel>
+            List<TimeViewModel> temp = new List<TimeViewModel>
             {
-                new CalculatorModel() { CalcValue = Day },
-                new CalculatorModel() { CalcValue = Week },
-                new CalculatorModel() { CalcValue = Second }
+                new TimeViewModel() { CalcValue = Day },
+                new TimeViewModel() { CalcValue = Week },
+                new TimeViewModel() { CalcValue = Second }
             };
-            Results = temp;
+            this.Results = temp;
         }
 
         private void CalcWeek()
         {
-            if (NumOutput != null)
+            if (this.NumOutput != null)
             {
                 double result;
-                double.TryParse(NumOutput, out result);
-                Day = string.Concat((Math.Truncate((result * 7) * 1000) / 1000), "d");
-                Week = string.Concat(NumOutput, "w");
-                Second = string.Concat((Math.Truncate((result * 604800) * 1000) / 1000), "s");
+                double.TryParse(this.NumOutput, out result);
+                this.Day = string.Concat((Math.Truncate((result * 7) * 1000) / 1000), "d");
+                this.Week = string.Concat(this.NumOutput, "w");
+                this.Second = string.Concat((Math.Truncate((result * 604800) * 1000) / 1000), "s");
             }
-            List<CalculatorModel> temp = new List<CalculatorModel>
+            List<TimeViewModel> temp = new List<TimeViewModel>
             {
-                new CalculatorModel() { CalcValue = Day },
-                new CalculatorModel() { CalcValue = Week },
-                new CalculatorModel() { CalcValue = Second }
+                new TimeViewModel() { CalcValue = Day },
+                new TimeViewModel() { CalcValue = Week },
+                new TimeViewModel() { CalcValue = Second }
             };
-            Results = temp;
+            this.Results = temp;
         }
 
         private void CalcYear()
         {
-            if (NumOutput != null)
+            if (this.NumOutput != null)
             {
                 double result;
-                double.TryParse(NumOutput, out result);
-                Day = string.Concat((Math.Truncate((result * 365) * 1000) / 1000), "d");
-                Week = string.Concat((Math.Truncate((result * 52.143) * 1000) / 1000), "w");
-                Second = string.Concat((Math.Truncate((result * 3.154) * 1000) / 1000), "s");
+                double.TryParse(this.NumOutput, out result);
+                this.Day = string.Concat((Math.Truncate((result * 365) * 1000) / 1000), "d");
+                this.Week = string.Concat((Math.Truncate((result * 52.143) * 1000) / 1000), "w");
+                this.Second = string.Concat((Math.Truncate((result * 3.154) * 1000) / 1000), "s");
             }
-            List<CalculatorModel> temp = new List<CalculatorModel>
+            List<TimeViewModel> temp = new List<TimeViewModel>
             {
-                new CalculatorModel() { CalcValue = Day },
-                new CalculatorModel() { CalcValue = Week },
-                new CalculatorModel() { CalcValue = Second }
+                new TimeViewModel() { CalcValue = Day },
+                new TimeViewModel() { CalcValue = Week },
+                new TimeViewModel() { CalcValue = Second }
             };
-            Results = temp;
+            this.Results = temp;
         }
 
         //private void CalcMinute()

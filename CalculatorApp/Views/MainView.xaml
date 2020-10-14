@@ -6,11 +6,21 @@
              xmlns:local="clr-namespace:CalculatorApp"
              xmlns:vm="clr-namespace:CalculatorApp.ViewModels"
              xmlns:cvt="clr-namespace:CalculatorApp.Converters"
+             xmlns:m="clr-namespace:CalculatorApp.Models"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              Background="#aaaaaa"
              mc:Ignorable="d">
 
     <UserControl.Resources>
         <cvt:IsWidthLessThanHeightConvert x:Key="IsWidthLessThanHeight"/>
+
+        <ObjectDataProvider x:Key="dataFromEnum"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="m:TimeUnit"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
 
         <Style x:Key="SelfButton" TargetType="Button">
             <Setter Property="FontFamily" Value="Terminal"/>
@@ -78,7 +88,7 @@
             <Setter Property="FontSize" Value="30"/>
         </Style>
         <Style x:Key="TextBlock.Output.Value" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource baseStyle.tb}">
-            <Setter Property="FontSize" Value="5"/>
+            <Setter Property="FontSize" Value="15"/>
         </Style>
     </UserControl.Resources>
 
@@ -102,8 +112,10 @@
             <ComboBox Grid.Row="2"
                       Padding="5" HorizontalAlignment="Left"
                       VerticalAlignment="Center"
-                      ItemsSource="{Binding ComboItems}"
-                      SelectedItem="{Binding SelectedType}"/>
+                      ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                      SelectedItem="{Binding Path=SelectedComboType}"
+                      IsEditable="True" IsReadOnly="True" Text="시간">
+            </ComboBox>
 
             <StackPanel Grid.Row="3">
                 <ItemsControl ItemsSource="{Binding Results}">
@@ -114,9 +126,9 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="0,0,10,0"
-                                       Text="{Binding CalcValue}"
-                                       FontWeight="Bold"/>
+                            <TextBlock Style="{StaticResource TextBlock.Output.Value}"
+                                       Margin="0,0,10,0"
+                                       Text="{Binding CalcValue}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -141,7 +153,9 @@
                     Style="{StaticResource SelfButton}"
                     Content="CE"
                     Command="{Binding ClearCommand}"/>
-            <Button Grid.Column="2" Command="{Binding BackspaceCommand}">
+            <Button Grid.Column="2"
+                    Style="{StaticResource SelfButton}"
+                    Command="{Binding BackspaceCommand}">
                 <Image Source="/Resources/iconfinder_backspace_4879862 (1).png"/>
             </Button>
 
