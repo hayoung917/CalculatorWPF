@@ -20,8 +20,8 @@
             set
             {
                 SetProperty(ref this._numOutput, value);
-                double inputToCalculate = Convert.ToDouble(this.NumOutput);
-                List<TimeViewModel> result = TimeCalculator.ConvertAll(inputToCalculate, this._selectedComboType);
+                double inputCalculate = Convert.ToDouble(this.NumOutput);
+                List<TimeViewModel> result = TimeCalculator.ConvertAll(inputCalculate, this._selectedComboType);
                 SetResult(result);
             }
         }
@@ -40,12 +40,19 @@
             set
             {
                 this._selectedComboType = (TimeUnit)Enum.Parse(typeof(TimeUnit), value);
-                double inputToCalculate = Convert.ToDouble(this.NumOutput);
-                List<TimeViewModel> result = TimeCalculator.ConvertAll(inputToCalculate, this._selectedComboType);
+                double inputCalculate = Convert.ToDouble(this.NumOutput);
+                List<TimeViewModel> result = TimeCalculator.ConvertAll(inputCalculate, this._selectedComboType);
                 SetResult(result);
             }
         }
         #endregion
+
+        public MainViewModel()
+        {
+            this.InputCommand = new RelayCommand<string>(InputNumber);
+            this.BackspaceCommand = new RelayCommand(BackspaceNumber);
+            this.ClearCommand = new RelayCommand(ClearNumber);
+        }
 
         private void InputNumber(string btnNum)
         {
@@ -69,13 +76,6 @@
             {
                 this.NumOutput = " ";
             }
-        }
-
-        public MainViewModel()
-        {
-            this.InputCommand = new RelayCommand<string>(InputNumber);
-            this.BackspaceCommand = new RelayCommand(BackspaceNumber);
-            this.ClearCommand = new RelayCommand(ClearNumber);
         }
 
         private void SetResult(List<TimeViewModel> resultList)

@@ -24,18 +24,28 @@
         }
         private static double GetConversionFactor(TimeUnit targetUnit)
         {
-            return targetUnit switch
+            switch (targetUnit)
             {
-                TimeUnit.마이크로초 => 1,
-                TimeUnit.밀리초 => Math.Pow(10, -3),
-                TimeUnit.초 => Math.Pow(10, -6),
-                TimeUnit.분 => Math.Pow(10, -6) / 60,
-                TimeUnit.시간 => Math.Pow(10, -6) / (Math.Pow(60, 2)),
-                TimeUnit.일 => Math.Pow(10, -6) / (Math.Pow(60, 2) * 24),
-                TimeUnit.주 => Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 7),
-                TimeUnit.년 => Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 365.25),
-                _ => throw new NotImplementedException(),
-            };
+                case TimeUnit.마이크로초:
+                    return 1;
+                case TimeUnit.밀리초:
+                    return Math.Pow(10, -3);
+                case TimeUnit.초:
+                    return Math.Pow(10, -6);
+                case TimeUnit.분:
+                    return Math.Pow(10, -6) / 60;
+                case TimeUnit.시간:
+                    return Math.Pow(10, -6) / (Math.Pow(60, 2));
+                case TimeUnit.일:
+                    return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24);
+                case TimeUnit.주:
+                    return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 7);
+                case TimeUnit.년:
+                    return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 365.25);
+                default:
+                    break;
+            }
+            return (double)targetUnit;
         }
     }
 }
