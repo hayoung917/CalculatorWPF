@@ -88,7 +88,7 @@
             <Setter Property="FontSize" Value="30"/>
         </Style>
         <Style x:Key="TextBlock.Output.Value" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource baseStyle.tb}">
-            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontSize" Value="13"/>
         </Style>
     </UserControl.Resources>
 
@@ -112,10 +112,10 @@
             <ComboBox Grid.Row="2"
                       Padding="5" HorizontalAlignment="Left"
                       VerticalAlignment="Center"
+                      Text="마이크로초"
                       ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                       SelectedItem="{Binding Path=SelectedComboType}"
-                      IsEditable="True" IsReadOnly="True" Text="시간">
-            </ComboBox>
+                      IsEditable="True" IsReadOnly="True"/>
 
             <StackPanel Grid.Row="3">
                 <ItemsControl ItemsSource="{Binding Results}">
@@ -126,15 +126,20 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Style="{StaticResource TextBlock.Output.Value}"
-                                       Margin="0,0,10,0"
-                                       Text="{Binding CalcValue}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource TextBlock.Output.Value}" Text="{Binding CalcValue}"/>
+                                <TextBlock Style="{StaticResource TextBlock.Output.Value}"
+                                           Margin="0,0,10,0"
+                                           Text="{Binding OuputTimeUnit}"/>
+                            </StackPanel>
                         </DataTemplate>
+
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
         </Grid>
 
+        <!-- 계산기 키패드 버튼 -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
