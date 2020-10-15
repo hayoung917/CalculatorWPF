@@ -13,6 +13,20 @@
         public ICommand BackspaceCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
 
+        private TimeUnit _selectedComboType;
+        public TimeUnit SelectedComboType
+        {
+            get => this._selectedComboType;
+            set
+            {
+                SetProperty(ref this._selectedComboType, value);
+                //this._selectedComboType = (TimeUnit)Enum.Parse(typeof(TimeUnit), value);
+                double inputCalculate = Convert.ToDouble(this.NumOutput);
+                List<TimeViewModel> result = TimeCalculator.ConvertAll(inputCalculate, this._selectedComboType);
+                SetResult(result);
+            }
+        }
+
         private string _numOutput;
         public string NumOutput
         {
@@ -33,20 +47,7 @@
             set => SetProperty(ref this._results, value);
         }
 
-        private TimeUnit _selectedComboType;
-        public string SelectedComboType
-        {
-            get => this._selectedComboType.ToString();
-            set
-            {
-                this._selectedComboType = (TimeUnit)Enum.Parse(typeof(TimeUnit), value);
-                double inputCalculate = Convert.ToDouble(this.NumOutput);
-                List<TimeViewModel> result = TimeCalculator.ConvertAll(inputCalculate, this._selectedComboType);
-                SetResult(result);
-            }
-        }
         #endregion
-
         public MainViewModel()
         {
             this.InputCommand = new RelayCommand<string>(InputNumber);
@@ -83,7 +84,7 @@
             var temp = new List<TimeViewModel>();
             foreach (TimeViewModel result in resultList)
             {
-                if (result.OuputTimeUnit != this.SelectedComboType && result.CalcValue != 0)
+                //if (result.OuputTimeUnit != this.SelectedComboType && result.CalcValue != 0)
                 {
                     temp.Add(result);
                 }

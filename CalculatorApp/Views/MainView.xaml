@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cvt="clr-namespace:CalculatorApp.Converters"
              xmlns:m="clr-namespace:CalculatorApp.Models"
+             xmlns:helper="clr-namespace:CalculatorApp.Helpers"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              Background="#aaaaaa"
              mc:Ignorable="d">
@@ -13,8 +14,8 @@
         <cvt:IsWidthLessThanHeightConvert x:Key="IsWidthLessThanHeight"/>
 
         <ObjectDataProvider x:Key="dataFromEnum"
-                            MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}">
+                            MethodName="GetValuesAndDescriptions"
+                            ObjectType="helper:EnumHelper">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="m:TimeUnit"/>
             </ObjectDataProvider.MethodParameters>
@@ -110,10 +111,9 @@
             <ComboBox Grid.Row="2"
                       Padding="5" HorizontalAlignment="Left"
                       VerticalAlignment="Center"
-                      Text="Microsecond"
                       ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                       SelectedItem="{Binding Path=SelectedComboType}"
-                      IsEditable="True" IsReadOnly="True"/>
+                      DisplayMemberPath="Description" SelectedValuePath="Value"/>
 
             <StackPanel Grid.Row="3">
                 <ItemsControl ItemsSource="{Binding Results}">
@@ -136,7 +136,7 @@
             </StackPanel>
         </Grid>
 
-        <!-- 계산기 키패드 버튼 -->
+        <!--  계산기 키패드 버튼  -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

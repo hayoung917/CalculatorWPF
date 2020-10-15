@@ -1,4 +1,4 @@
-﻿namespace CalculatorApp.Models
+﻿namespace CalculatorApp.ViewModels
 {
     using Saige.MVVM;
 
