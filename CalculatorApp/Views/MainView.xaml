@@ -110,7 +110,7 @@
             <ComboBox Grid.Row="2"
                       Padding="5" HorizontalAlignment="Left"
                       VerticalAlignment="Center"
-                      Text="마이크로초"
+                      Text="Microsecond"
                       ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                       SelectedItem="{Binding Path=SelectedComboType}"
                       IsEditable="True" IsReadOnly="True"/>

@@ -26,21 +26,21 @@
         {
             switch (targetUnit)
             {
-                case TimeUnit.마이크로초:
+                case TimeUnit.Microsecond:
                     return 1;
-                case TimeUnit.밀리초:
+                case TimeUnit.Millisecond:
                     return Math.Pow(10, -3);
-                case TimeUnit.초:
+                case TimeUnit.Second:
                     return Math.Pow(10, -6);
-                case TimeUnit.분:
+                case TimeUnit.Minute:
                     return Math.Pow(10, -6) / 60;
-                case TimeUnit.시간:
+                case TimeUnit.Hour:
                     return Math.Pow(10, -6) / (Math.Pow(60, 2));
-                case TimeUnit.일:
+                case TimeUnit.Day:
                     return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24);
-                case TimeUnit.주:
+                case TimeUnit.Week:
                     return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 7);
-                case TimeUnit.년:
+                case TimeUnit.Year:
                     return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 365.25);
                 default:
                     break;
