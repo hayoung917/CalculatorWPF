@@ -15,39 +15,29 @@
         public ICommand BackspaceCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
 
+        public TimeUnit[] Units { get; }
+
         private TimeUnit _selectedComboType;
         public TimeUnit SelectedComboType
         {
             get => this._selectedComboType;
-            set //todo 4 : set없애기
-            {
-                SetProperty(ref this._selectedComboType, value);
-                //this._selectedComboType = (TimeUnit)Enum.Parse(typeof(TimeUnit), value.ToString());
-                double inputCalculate = Convert.ToDouble(this.NumOutput);
-                List<TimeViewModel> result = TimeCalculator.AddCalcList(inputCalculate, this._selectedComboType);
-                SetResult(result);
-            }
+            set => SetProperty(ref this._selectedComboType, value); //todo 4 : set없애기
         }
 
         private string _numOutput;
         public string NumOutput
         {
             get => this._numOutput;
-            set
-            {
-                SetProperty(ref this._numOutput, value);
-                double inputCalculate = Convert.ToDouble(this.NumOutput);
-                List<TimeViewModel> result = TimeCalculator.AddCalcList(inputCalculate, this._selectedComboType);
-                SetResult(result);
-            }
+            set => SetProperty(ref this._numOutput, value);
         }
 
-        private List<TimeViewModel> _results;
-        public List<TimeViewModel> Results
+        private List<Time> _results;
+        public List<Time> Results
         {
             get => this._results;
             set => SetProperty(ref this._results, value);
         }
+
         #endregion
 
         public MainViewModel()
@@ -81,12 +71,12 @@
             }
         }
 
-        private void SetResult(List<TimeViewModel> resultList)
+        private void SetResult(List<Time> resultList)
         {
-            var temp = new List<TimeViewModel>();
-            foreach (TimeViewModel result in resultList)
+            var temp = new List<Time>();
+            foreach (Time result in resultList)
             {
-                if (result.OuputTimeUnit != this.SelectedComboType.ToString() && result.CalcValue != 0)
+                if (result.Unit.ToString() != this.SelectedComboType.ToString() && result.Value != 0)
                 {
                     temp.Add(result);
                 }
@@ -102,7 +92,9 @@
                 case nameof(this.SelectedComboType):
                     OnSelectedComboTypeChanged(oldValue, newValue);
                     break;
-
+                case nameof(this.NumOutput):
+                    OnSelectedComboTypeChanged(oldValue, newValue);
+                    break;
                 default:
                     break;
             }
@@ -110,7 +102,9 @@
 
         protected virtual void OnSelectedComboTypeChanged(object oldValue, object newValue)
         {
-
+            double inputCalculate = Convert.ToDouble(this.NumOutput);
+            List<Time> result = TimeCalculator.AddCalcList(inputCalculate, this._selectedComboType);
+            SetResult(result);
         }
     }
 }

@@ -2,21 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
-    using CalculatorApp.ViewModels; //todo 1 : 의존성지우기
 
     public static class TimeCalculator
     {
         //todo 2 : 이름변경
         //todo 3 : 타임사용
-        public static List<TimeViewModel> AddCalcList(double input, TimeUnit baseUnit)
+        public static List<Time> AddCalcList(double input, TimeUnit baseUnit)
         {
             Array unitArray = Enum.GetValues(typeof(TimeUnit));
-            var resultList = new List<TimeViewModel>();
+            var resultList = new List<Time>();
             foreach (TimeUnit timeUnit in unitArray)
             {
                 double calculatedValue = Convert(input, baseUnit, timeUnit);
                 calculatedValue = Math.Round(calculatedValue, 3);
-                var result = new TimeViewModel() { CalcValue = calculatedValue, OuputTimeUnit = timeUnit.ToString() };
+                var result = new Time() { Value = calculatedValue, Unit = timeUnit };
                 resultList.Add(result);
             }
             return resultList;

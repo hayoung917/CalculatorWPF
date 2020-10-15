@@ -1,6 +1,5 @@
 ﻿namespace CalculatorApp.ViewModels
 {
-    using System;
     using CalculatorApp.Models;
     using Saige.MVVM;
 
