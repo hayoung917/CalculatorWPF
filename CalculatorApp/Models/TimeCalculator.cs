@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using CalculatorApp.ViewModels;
+    using CalculatorApp.ViewModels; //todo 1 : 의존성지우기
 
     public static class TimeCalculator
     {
-        public static List<TimeViewModel> ConvertAll(double input, TimeUnit baseUnit)
+        //todo 2 : 이름변경
+        //todo 3 : 타임사용
+        public static List<TimeViewModel> AddCalcList(double input, TimeUnit baseUnit)
         {
             Array unitArray = Enum.GetValues(typeof(TimeUnit));
             var resultList = new List<TimeViewModel>();
@@ -19,11 +21,13 @@
             }
             return resultList;
         }
+
         private static double Convert(double input, TimeUnit baseUnit, TimeUnit targetUnit)
         {
-            return input * (GetConversionFactor(targetUnit) / GetConversionFactor(baseUnit));
+            return input * (GetFactorToConvertTime(targetUnit) / GetFactorToConvertTime(baseUnit));
         }
-        private static double GetConversionFactor(TimeUnit targetUnit)
+
+        private static double GetFactorToConvertTime(TimeUnit targetUnit)
         {
             switch (targetUnit)
             {
@@ -44,9 +48,8 @@
                 case TimeUnit.Year:
                     return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 365.25);
                 default:
-                    break;
+                    return (double)targetUnit;
             }
-            return (double)targetUnit;
         }
     }
 }

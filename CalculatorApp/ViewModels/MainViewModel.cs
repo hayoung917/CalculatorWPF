@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using System.Windows.Input;
     using CalculatorApp.Models;
     using Saige.MVVM;
 
+    //todo 5: 추상화 다시하기
     public class MainViewModel : ViewModel
     {
         #region properties
@@ -17,12 +19,12 @@
         public TimeUnit SelectedComboType
         {
             get => this._selectedComboType;
-            set
+            set //todo 4 : set없애기
             {
                 SetProperty(ref this._selectedComboType, value);
-                //this._selectedComboType = (TimeUnit)Enum.Parse(typeof(TimeUnit), value);
+                //this._selectedComboType = (TimeUnit)Enum.Parse(typeof(TimeUnit), value.ToString());
                 double inputCalculate = Convert.ToDouble(this.NumOutput);
-                List<TimeViewModel> result = TimeCalculator.ConvertAll(inputCalculate, this._selectedComboType);
+                List<TimeViewModel> result = TimeCalculator.AddCalcList(inputCalculate, this._selectedComboType);
                 SetResult(result);
             }
         }
@@ -35,7 +37,7 @@
             {
                 SetProperty(ref this._numOutput, value);
                 double inputCalculate = Convert.ToDouble(this.NumOutput);
-                List<TimeViewModel> result = TimeCalculator.ConvertAll(inputCalculate, this._selectedComboType);
+                List<TimeViewModel> result = TimeCalculator.AddCalcList(inputCalculate, this._selectedComboType);
                 SetResult(result);
             }
         }
@@ -46,8 +48,8 @@
             get => this._results;
             set => SetProperty(ref this._results, value);
         }
-
         #endregion
+
         public MainViewModel()
         {
             this.InputCommand = new RelayCommand<string>(InputNumber);
@@ -84,12 +86,31 @@
             var temp = new List<TimeViewModel>();
             foreach (TimeViewModel result in resultList)
             {
-                //if (result.OuputTimeUnit != this.SelectedComboType && result.CalcValue != 0)
+                if (result.OuputTimeUnit != this.SelectedComboType.ToString() && result.CalcValue != 0)
                 {
                     temp.Add(result);
                 }
             }
             this.Results = temp;
+        }
+
+        protected override void OnPropertyChanged(object oldValue, object newValue, [CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(oldValue, newValue, propertyName);
+            switch (propertyName)
+            {
+                case nameof(this.SelectedComboType):
+                    OnSelectedComboTypeChanged(oldValue, newValue);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        protected virtual void OnSelectedComboTypeChanged(object oldValue, object newValue)
+        {
+
         }
     }
 }

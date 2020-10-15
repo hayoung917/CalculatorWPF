@@ -1,17 +1,35 @@
 ﻿namespace CalculatorApp.ViewModels
 {
+    using System;
+    using CalculatorApp.Models;
     using Saige.MVVM;
 
     public class TimeViewModel : ViewModel
     {
-        private double _calcValue;
+        private double _value;
+        private TimeUnit _unit;
 
-        public double CalcValue
+        public double Value
         {
-            get => this._calcValue;
-            set => SetProperty(ref this._calcValue, value);
+            get => this._value;
+            set => SetProperty(ref this._value, value);
         }
 
-        public string OuputTimeUnit { get; set; }
+        public TimeUnit Unit
+        {
+            get => this._unit;
+            set => SetProperty(ref this._unit, value);
+        }
+
+        public TimeViewModel(Time time)
+        {
+            ProjectModel(time);
+        }
+
+        private void ProjectModel(Time time)
+        {
+            this.Value = time?.Value ?? default;
+            this.Unit = time?.Unit ?? default;
+        }
     }
 }
