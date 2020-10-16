@@ -8,7 +8,6 @@
     using CalculatorApp.Models;
     using Saige.MVVM;
 
-    // todo 5: 추상화 다시하기
     public class MainViewModel : ViewModel
     {
         #region properties

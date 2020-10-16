@@ -6,8 +6,6 @@
 
     public static class TimeCalculator
     {
-        // todo 2 : 이름변경
-        // todo 3 : 타임사용
         public static List<Time> GetAllConvertedTimes(double input, TimeUnit baseUnit)
         {
             IEnumerable<TimeUnit> unitArray = Enum.GetValues(typeof(TimeUnit)).OfType<TimeUnit>();
