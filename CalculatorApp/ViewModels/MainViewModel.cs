@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
     using CalculatorApp.Models;
@@ -49,7 +51,17 @@
 
         private void InputNumber(string btnNum)
         {
-            this.NumOutput += btnNum;
+            if(btnNum.Equals("."))
+            {
+                if (!this.NumOutput.ToString().Contains("."))
+                {
+                    this.NumOutput += btnNum;
+                }
+            }
+            else
+            {
+                this.NumOutput += btnNum;
+            }
         }
 
         private void ClearNumber()
