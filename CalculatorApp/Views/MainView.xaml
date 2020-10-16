@@ -115,7 +115,7 @@
                       SelectedItem="{Binding SelectedComboType}"/>
 
             <StackPanel Grid.Row="3">
-                <ItemsControl ItemsSource="{Binding Results}">
+                <ItemsControl ItemsSource="{Binding TimeConverted}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>
