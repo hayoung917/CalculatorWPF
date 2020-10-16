@@ -5,22 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cvt="clr-namespace:CalculatorApp.Converters"
              xmlns:m="clr-namespace:CalculatorApp.Models"
-             xmlns:helper="clr-namespace:CalculatorApp.Helpers"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              Background="#aaaaaa"
              mc:Ignorable="d">
 
     <UserControl.Resources>
         <cvt:IsWidthLessThanHeightConvert x:Key="IsWidthLessThanHeight"/>
-
-        <ObjectDataProvider x:Key="dataFromEnum"
-                            MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="m:TimeUnit"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-
         <Style x:Key="SelfButton" TargetType="Button">
             <Setter Property="FontFamily" Value="Terminal"/>
             <Setter Property="FontSize" Value="30"/>
@@ -47,7 +37,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style x:Key="ResponsiveUI" TargetType="UniformGrid">
             <Style.Resources/>
             <Style.Triggers>
@@ -75,7 +64,6 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-
         <Style x:Key="baseStyle.tb" TargetType="{x:Type TextBlock}">
             <Setter Property="FontFamily" Value="Terminal"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -111,23 +99,23 @@
             <ComboBox Grid.Row="2"
                       Padding="5" HorizontalAlignment="Left"
                       VerticalAlignment="Center"
-                      ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                      SelectedItem="{Binding SelectedComboType}"/>
+                      ItemsSource="{Binding Units}"
+                      SelectedItem="{Binding SelectedUnit}"/>
 
             <StackPanel Grid.Row="3">
                 <ItemsControl ItemsSource="{Binding TimeConverted}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
+                            <WrapPanel Orientation="Horizontal"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource TextBlock.Output.Value}" Text="{Binding Value}"/>
-                                <TextBlock Style="{StaticResource TextBlock.Output.Value}"
-                                           Margin="0,0,10,0"
-                                           Text="{Binding Unit}"/>
+                                <TextBlock Style="{StaticResource TextBlock.Output.Value}" Margin="0,0,10,0">
+                                    <Run Text="{Binding Value}"/>
+                                    <Run Text="{Binding Unit}"/>
+                                </TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

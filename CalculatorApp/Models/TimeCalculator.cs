@@ -2,19 +2,22 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public static class TimeCalculator
     {
         // todo 2 : 이름변경
         // todo 3 : 타임사용
-        public static List<Time> AddConvertTimeToList(double input, TimeUnit baseUnit)
+        public static List<Time> GetAllConvertedTimes(double input, TimeUnit baseUnit)
         {
-            Array unitArray = Enum.GetValues(typeof(TimeUnit));
+            IEnumerable<TimeUnit> unitArray = Enum.GetValues(typeof(TimeUnit)).OfType<TimeUnit>();
             var resultList = new List<Time>();
+
             foreach (TimeUnit timeUnit in unitArray)
             {
                 double calculatedValue = Convert(input, baseUnit, timeUnit);
                 calculatedValue = Math.Round(calculatedValue, 3);
+
                 var result = new Time() { Value = calculatedValue, Unit = timeUnit };
                 resultList.Add(result);
             }
@@ -32,20 +35,28 @@
             {
                 case TimeUnit.Microsecond:
                     return 1;
+
                 case TimeUnit.Millisecond:
                     return Math.Pow(10, -3);
+
                 case TimeUnit.Second:
                     return Math.Pow(10, -6);
+
                 case TimeUnit.Minute:
                     return Math.Pow(10, -6) / 60;
+
                 case TimeUnit.Hour:
                     return Math.Pow(10, -6) / (Math.Pow(60, 2));
+
                 case TimeUnit.Day:
                     return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24);
+
                 case TimeUnit.Week:
                     return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 7);
+
                 case TimeUnit.Year:
                     return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 365.25);
+
                 default:
                     return (double)targetUnit;
             }

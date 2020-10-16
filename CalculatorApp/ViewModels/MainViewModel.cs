@@ -1,6 +1,8 @@
 ﻿namespace CalculatorApp.ViewModels
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
     using CalculatorApp.Models;
@@ -10,36 +12,40 @@
     public class MainViewModel : ViewModel
     {
         #region properties
-        public ICommand InputCommand { get; private set; }
-        public ICommand BackspaceCommand { get; private set; }
-        public ICommand ClearCommand { get; private set; }
-
-        public TimeUnit Units { get; }
         private string _numOutput;
         private IReadOnlyList<TimeViewModel> _timeCoverted;
-        private TimeUnit _selectedComboType;
+        private TimeUnit _selectedUnit;
+        private IEnumerable<TimeUnit> _units;
 
-        public TimeUnit SelectedComboType
+        public IEnumerable<TimeUnit> Units
         {
-            get => this._selectedComboType;
-            set => SetProperty(ref this._selectedComboType, value); // todo 4 : set없애기
+            get => this._units;
+            private set => SetProperty(ref this._units, value);
         }
-
+        public TimeUnit SelectedUnit
+        {
+            get => this._selectedUnit;
+            set => SetProperty(ref this._selectedUnit, value); // todo 4 : set없애기
+        }
         public string NumOutput
         {
             get => this._numOutput;
             set => SetProperty(ref this._numOutput, value);
         }
-
         public IReadOnlyList<TimeViewModel> TimeConverted
         {
             get => this._timeCoverted;
             set => SetProperty(ref this._timeCoverted, value);
         }
+
+        public ICommand InputCommand { get; }
+        public ICommand BackspaceCommand { get; }
+        public ICommand ClearCommand { get; }
         #endregion
 
         public MainViewModel()
         {
+            this.Units = Enum.GetValues(typeof(TimeUnit)).OfType<TimeUnit>().ToArray();
             this.InputCommand = new RelayCommand<string>(InputNumber);
             this.BackspaceCommand = new RelayCommand(BackspaceNumber);
             this.ClearCommand = new RelayCommand(ClearNumber);
@@ -49,7 +55,7 @@
         {
             if (btnNum.Equals("."))
             {
-                if (!this.NumOutput.ToString().Contains("."))
+                if (this.NumOutput.Contains(".") == false)
                 {
                     this.NumOutput += btnNum;
                 }
@@ -79,17 +85,17 @@
             }
         }
 
-        private void AddCalcValueToList(List<TimeViewModel> resultList)
+        private void RemoveInvaildItem(List<TimeViewModel> resultList)
         {
-            var temp = new List<TimeViewModel>();
+            var converted = new List<TimeViewModel>();
             foreach (TimeViewModel result in resultList)
             {
-                if (result.Unit.ToString() != this.SelectedComboType.ToString() && result.Value != 0)
+                if (result.Unit.ToString() != this.SelectedUnit.ToString() && result.Value != 0)
                 {
-                    temp.Add(result);
+                    converted.Add(result);
                 }
             }
-            this.TimeConverted = temp;
+            this.TimeConverted = converted;
         }
 
         protected override void OnPropertyChanged(object oldValue, object newValue, [CallerMemberName] string propertyName = null)
@@ -97,31 +103,31 @@
             base.OnPropertyChanged(oldValue, newValue, propertyName);
             switch (propertyName)
             {
-                case nameof(this.SelectedComboType):
+                case nameof(this.SelectedUnit):
                     OnSelectedComboTypeChanged(oldValue, newValue);
                     break;
 
                 case nameof(this.NumOutput):
                     OnNumOutputChanged(oldValue, newValue);
                     break;
-
-                default:
-                    break;
             }
         }
 
         protected virtual void OnSelectedComboTypeChanged(object oldValue, object newValue)
         {
-            _ = double.TryParse(this.NumOutput, out double inputCalculate);
-            List<TimeViewModel> result = TimeViewModel.CovertedModelToViewModel(inputCalculate, this._selectedComboType);
-            AddCalcValueToList(result);
+            CalcInputNumber();
         }
 
         protected virtual void OnNumOutputChanged(object oldValue, object newValue)
         {
+            CalcInputNumber();
+        }
+
+        private void CalcInputNumber()
+        {
             _ = double.TryParse(this.NumOutput, out double inputCalculate);
-            List<TimeViewModel> result = TimeViewModel.CovertedModelToViewModel(inputCalculate, this._selectedComboType);
-            AddCalcValueToList(result);
+            List<TimeViewModel> result = TimeViewModel.CovertedModelToViewModel(inputCalculate, this._selectedUnit);
+            RemoveInvaildItem(result);
         }
     }
 }

@@ -35,7 +35,7 @@
         public static List<TimeViewModel> CovertedModelToViewModel(double inputCalculate, TimeUnit selectedComboType)
         {
             var result = new List<TimeViewModel>();
-            List<Time> time = TimeCalculator.AddConvertTimeToList(inputCalculate, selectedComboType);
+            List<Time> time = TimeCalculator.GetAllConvertedTimes(inputCalculate, selectedComboType);
             foreach (Time item in time)
             {
                 result.Add(new TimeViewModel(item));
