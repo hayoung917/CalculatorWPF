@@ -14,7 +14,8 @@
         <cvt:IsWidthLessThanHeightConvert x:Key="IsWidthLessThanHeight"/>
 
         <ObjectDataProvider x:Key="dataFromEnum"
-                            MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+                            MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="m:TimeUnit"/>
             </ObjectDataProvider.MethodParameters>
@@ -111,8 +112,7 @@
                       Padding="5" HorizontalAlignment="Left"
                       VerticalAlignment="Center"
                       ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                      SelectedItem="{Binding SelectedComboType}"
-                     />
+                      SelectedItem="{Binding SelectedComboType}"/>
 
             <StackPanel Grid.Row="3">
                 <ItemsControl ItemsSource="{Binding Results}">

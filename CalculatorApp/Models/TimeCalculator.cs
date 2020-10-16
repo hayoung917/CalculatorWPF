@@ -5,9 +5,9 @@
 
     public static class TimeCalculator
     {
-        //todo 2 : 이름변경
-        //todo 3 : 타임사용
-        public static List<Time> AddListToConvertTime(double input, TimeUnit baseUnit)
+        // todo 2 : 이름변경
+        // todo 3 : 타임사용
+        public static List<Time> AddConvertTimeToList(double input, TimeUnit baseUnit)
         {
             Array unitArray = Enum.GetValues(typeof(TimeUnit));
             var resultList = new List<Time>();

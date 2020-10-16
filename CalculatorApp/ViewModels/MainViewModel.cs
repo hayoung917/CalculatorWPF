@@ -1,15 +1,12 @@
 ﻿namespace CalculatorApp.ViewModels
 {
-    using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
     using CalculatorApp.Models;
     using Saige.MVVM;
 
-    //todo 5: 추상화 다시하기
+    // todo 5: 추상화 다시하기
     public class MainViewModel : ViewModel
     {
         #region properties
@@ -17,29 +14,28 @@
         public ICommand BackspaceCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
 
-        public TimeUnit[] Units { get; }
-
+        public TimeUnit Units { get; }
+        private string _numOutput;
+        private IReadOnlyList<TimeViewModel> _timeCoverted;
         private TimeUnit _selectedComboType;
+
         public TimeUnit SelectedComboType
         {
             get => this._selectedComboType;
-            set => SetProperty(ref this._selectedComboType, value); //todo 4 : set없애기
+            set => SetProperty(ref this._selectedComboType, value); // todo 4 : set없애기
         }
 
-        private string _numOutput;
         public string NumOutput
         {
             get => this._numOutput;
             set => SetProperty(ref this._numOutput, value);
         }
 
-        private IReadOnlyList<TimeViewModel> _timeCoverted;
-        public IReadOnlyList<TimeViewModel> Results
+        public IReadOnlyList<TimeViewModel> TimeConverted
         {
             get => this._timeCoverted;
             set => SetProperty(ref this._timeCoverted, value);
         }
-
         #endregion
 
         public MainViewModel()
@@ -51,7 +47,7 @@
 
         private void InputNumber(string btnNum)
         {
-            if(btnNum.Equals("."))
+            if (btnNum.Equals("."))
             {
                 if (!this.NumOutput.ToString().Contains("."))
                 {
@@ -83,7 +79,7 @@
             }
         }
 
-        private void SetResult(List<TimeViewModel> resultList)
+        private void AddCalcValueToList(List<TimeViewModel> resultList)
         {
             var temp = new List<TimeViewModel>();
             foreach (TimeViewModel result in resultList)
@@ -93,7 +89,7 @@
                     temp.Add(result);
                 }
             }
-            this.Results = temp;
+            this.TimeConverted = temp;
         }
 
         protected override void OnPropertyChanged(object oldValue, object newValue, [CallerMemberName] string propertyName = null)
@@ -104,9 +100,11 @@
                 case nameof(this.SelectedComboType):
                     OnSelectedComboTypeChanged(oldValue, newValue);
                     break;
+
                 case nameof(this.NumOutput):
-                    OnSelectedComboTypeChanged(oldValue, newValue);
+                    OnNumOutputChanged(oldValue, newValue);
                     break;
+
                 default:
                     break;
             }
@@ -115,8 +113,15 @@
         protected virtual void OnSelectedComboTypeChanged(object oldValue, object newValue)
         {
             _ = double.TryParse(this.NumOutput, out double inputCalculate);
-            List<TimeViewModel> result = TimeViewModel.ModelToViewModel(inputCalculate, this._selectedComboType);
-            SetResult(result);
+            List<TimeViewModel> result = TimeViewModel.CovertedModelToViewModel(inputCalculate, this._selectedComboType);
+            AddCalcValueToList(result);
+        }
+
+        protected virtual void OnNumOutputChanged(object oldValue, object newValue)
+        {
+            _ = double.TryParse(this.NumOutput, out double inputCalculate);
+            List<TimeViewModel> result = TimeViewModel.CovertedModelToViewModel(inputCalculate, this._selectedComboType);
+            AddCalcValueToList(result);
         }
     }
 }
