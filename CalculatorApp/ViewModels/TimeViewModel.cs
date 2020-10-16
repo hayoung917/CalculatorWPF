@@ -1,5 +1,7 @@
 ﻿namespace CalculatorApp.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
     using CalculatorApp.Models;
     using Saige.MVVM;
 
@@ -29,6 +31,17 @@
         {
             this.Value = time?.Value ?? default;
             this.Unit = time?.Unit ?? default;
+        }
+
+        public static List<TimeViewModel> ModelToViewModel(double inputCalculate, TimeUnit selectedComboType)
+        {
+            var result = new List<TimeViewModel>();
+            List<Time> time = TimeCalculator.AddListToConvertTime(inputCalculate, selectedComboType);
+            foreach (Time item in time)
+            {
+                result.Add(new TimeViewModel(item));
+            }
+            return result;
         }
     }
 }

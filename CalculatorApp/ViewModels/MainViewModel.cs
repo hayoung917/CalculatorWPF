@@ -31,11 +31,11 @@
             set => SetProperty(ref this._numOutput, value);
         }
 
-        private List<Time> _results;
-        public List<Time> Results
+        private IReadOnlyList<TimeViewModel> _timeCoverted;
+        public IReadOnlyList<TimeViewModel> Results
         {
-            get => this._results;
-            set => SetProperty(ref this._results, value);
+            get => this._timeCoverted;
+            set => SetProperty(ref this._timeCoverted, value);
         }
 
         #endregion
@@ -71,10 +71,10 @@
             }
         }
 
-        private void SetResult(List<Time> resultList)
+        private void SetResult(List<TimeViewModel> resultList)
         {
-            var temp = new List<Time>();
-            foreach (Time result in resultList)
+            var temp = new List<TimeViewModel>();
+            foreach (TimeViewModel result in resultList)
             {
                 if (result.Unit.ToString() != this.SelectedComboType.ToString() && result.Value != 0)
                 {
@@ -102,8 +102,8 @@
 
         protected virtual void OnSelectedComboTypeChanged(object oldValue, object newValue)
         {
-            double inputCalculate = Convert.ToDouble(this.NumOutput);
-            List<Time> result = TimeCalculator.AddCalcList(inputCalculate, this._selectedComboType);
+            _ = double.TryParse(this.NumOutput, out double inputCalculate);
+            List<TimeViewModel> result = TimeViewModel.ModelToViewModel(inputCalculate, this._selectedComboType);
             SetResult(result);
         }
     }
