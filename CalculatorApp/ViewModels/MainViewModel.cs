@@ -24,7 +24,7 @@
         public TimeUnit SelectedUnit
         {
             get => this._selectedUnit;
-            set => SetProperty(ref this._selectedUnit, value); // todo 4 : set없애기
+            set => SetProperty(ref this._selectedUnit, value);
         }
         public string NumOutput
         {
