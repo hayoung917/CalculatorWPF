@@ -21,6 +21,24 @@ namespace CalculatorApp.UnitTests.Models
                         new Time { Unit = TimeUnit.Second, Value = 0},
                     }
                 };
+
+                yield return new object[] {
+                    0.3, TimeUnit.Millisecond,
+                    new List<Time>{
+                        new Time { Unit = TimeUnit.Microsecond, Value = 300},
+                        new Time { Unit = TimeUnit.Millisecond, Value = 0.3},
+                        new Time { Unit = TimeUnit.Second, Value = 0},
+                    }
+                };
+
+                yield return new object[] {
+                    900, TimeUnit.Second,
+                    new List<Time>{
+                        new Time { Unit = TimeUnit.Microsecond, Value = 900000000},
+                        new Time { Unit = TimeUnit.Millisecond, Value = 900000},
+                        new Time { Unit = TimeUnit.Second, Value = 900},
+                    }
+                };
             }
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
