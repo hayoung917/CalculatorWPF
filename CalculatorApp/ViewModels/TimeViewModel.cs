@@ -32,10 +32,10 @@
             this.Unit = time?.Unit ?? default;
         }
 
-        public static List<TimeViewModel> CovertedModelToViewModel(double inputCalculate, TimeUnit selectedComboType)
+        public static List<TimeViewModel> CovertedModelToViewModel(double inputCalculate, TimeUnit selectedUnit)
         {
             var result = new List<TimeViewModel>();
-            List<Time> time = TimeCalculator.GetAllConvertedTimes(inputCalculate, selectedComboType);
+            List<Time> time = TimeCalculator.GetAllConvertedTimes(inputCalculate, selectedUnit);
             foreach (Time item in time)
             {
                 result.Add(new TimeViewModel(item));
