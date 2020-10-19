@@ -16,19 +16,19 @@
         [Description("초")]
         Second,
 
-        [Description("분")]
-        Minute,
+        //[Description("분")]
+        //Minute,
 
-        [Description("시간")]
-        Hour,
+        //[Description("시간")]
+        //Hour,
 
-        [Description("일")]
-        Day,
+        //[Description("일")]
+        //Day,
 
-        [Description("주")]
-        Week,
+        //[Description("주")]
+        //Week,
 
-        [Description("년")]
-        Year
+        //[Description("년")]
+        //Year
     }
 }
