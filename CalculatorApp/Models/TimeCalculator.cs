@@ -40,20 +40,20 @@
                 case TimeUnit.Second:
                     return Math.Pow(10, -6);
 
-                case TimeUnit.Minute:
-                    return Math.Pow(10, -6) / 60;
+                //case TimeUnit.Minute:
+                //    return Math.Pow(10, -6) / 60;
 
-                case TimeUnit.Hour:
-                    return Math.Pow(10, -6) / (Math.Pow(60, 2));
+                //case TimeUnit.Hour:
+                //    return Math.Pow(10, -6) / (Math.Pow(60, 2));
 
-                case TimeUnit.Day:
-                    return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24);
+                //case TimeUnit.Day:
+                //    return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24);
 
-                case TimeUnit.Week:
-                    return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 7);
+                //case TimeUnit.Week:
+                //    return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 7);
 
-                case TimeUnit.Year:
-                    return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 365.25);
+                //case TimeUnit.Year:
+                //    return Math.Pow(10, -6) / (Math.Pow(60, 2) * 24 * 365.25);
 
                 default:
                     return (double)targetUnit;
