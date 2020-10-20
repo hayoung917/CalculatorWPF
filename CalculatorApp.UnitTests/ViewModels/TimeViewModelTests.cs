@@ -65,18 +65,30 @@ namespace CalculatorApp.UnitTests.ViewModels
         [InlineData(5,TimeUnit.Microsecond)]
         [InlineData(3.8, TimeUnit.Millisecond)]
         [InlineData(30000, TimeUnit.Second)]
-        public void TimeViewModel_does_return_correctly(double expectedValue, TimeUnit expectedUnit)
+        public void Constructor_does_coustruct_correctly(
+            double expectedValue, TimeUnit expectedUnit)
         {
             //Arrange
-            var sut = new TimeViewModel(new Time { Value = expectedValue, Unit = expectedUnit });
+            var time = new Time { Value = expectedValue, Unit = expectedUnit };
 
             //Act
-            TimeUnit resultUnit = sut.Unit;
-            double resultValue = sut.Value;
+            var sut = new TimeViewModel(time);
 
             //Assert
-            resultValue.Should().Be(expectedValue);
-            resultUnit.Should().Be(expectedUnit);
+            sut.Value.Should().Be(expectedValue);
+            sut.Unit.Should().Be(expectedUnit);
+        }
+
+        [Fact]
+        public void Constructor_does_coustruct_correctly_if_time_is_null()
+        {
+            //Arrange\
+            //Act
+            var sut = new TimeViewModel(null);
+
+            //Assert
+            sut.Value.Should().Be(0);
+            sut.Unit.Should().Be((TimeUnit)default);
         }
         #endregion
     }
