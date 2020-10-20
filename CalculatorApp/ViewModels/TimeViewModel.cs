@@ -32,7 +32,7 @@
             this.Unit = time?.Unit ?? default;
         }
 
-        public static List<TimeViewModel> CovertedModelToViewModel(double inputCalculate, TimeUnit selectedUnit)
+        public static List<TimeViewModel> CovertedTimeViewModel(double inputCalculate, TimeUnit selectedUnit)
         {
             var result = new List<TimeViewModel>();
             List<Time> time = TimeCalculator.GetAllConvertedTimes(inputCalculate, selectedUnit);

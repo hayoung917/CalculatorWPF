@@ -125,7 +125,7 @@
         private void CalcInputNumber()
         {
             _ = double.TryParse(this.NumOutput, out double inputCalculate);
-            List<TimeViewModel> result = TimeViewModel.CovertedModelToViewModel(inputCalculate, this._selectedUnit);
+            List<TimeViewModel> result = TimeViewModel.CovertedTimeViewModel(inputCalculate, this._selectedUnit);
             RemoveInvaildItem(result);
         }
     }
