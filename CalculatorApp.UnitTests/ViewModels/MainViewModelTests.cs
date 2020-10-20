@@ -48,6 +48,7 @@ namespace CalculatorApp.UnitTests.ViewModels
         [InlineData("1258", " ")]
         [InlineData("asdf", " ")]
         [InlineData("", " ")]
+        [InlineData("2.586"," ")]
         public void ClearCommand_does_return_correctly(string commandParameter, string expectedResult)
         {
             //Arrange
