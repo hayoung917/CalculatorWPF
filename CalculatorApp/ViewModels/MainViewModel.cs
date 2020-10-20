@@ -52,7 +52,11 @@
 
         private void InputNumber(string btnNum)
         {
-            if (btnNum.Equals("."))
+            if (btnNum == null)
+            {
+                this.NumOutput = " ";
+            }
+            if (btnNum == ".")
             {
                 if (this.NumOutput.Contains(".") == false)
                 {
