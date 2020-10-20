@@ -16,6 +16,7 @@ namespace CalculatorApp.UnitTests.Converters
         [InlineData(new object[] { 500.5d, 35.50d }, null, null, null, false)]
         [InlineData(new object[] {"100","200" }, null, null, null, true)]
         [InlineData(new object[] { "100.8", "200.9" }, null, null, null, false)]
+        [InlineData(new object[] { "100.8", "200.9" }, null, "hjhj", null, false)]
         public void Convert_does_return_correctly(
             object[] values, Type targetType, object parameter, CultureInfo cultureInfo,
             bool expectedResult)
@@ -36,7 +37,7 @@ namespace CalculatorApp.UnitTests.Converters
         [InlineData(new object[] { 600, 900, 1200 }, null, null, null)]
         [InlineData(new object[] { 600, 900, 1200, 1600 }, null, null, null)]
 
-        public void Convert_does_throw_if_values_length_incorrectly(
+        public void Convert_does_throw_ArgumentException_if_length_of_value_incorrectly(
                 object[] values, Type targetType, object parameter, CultureInfo cultureInfo)
         {
             //Arrange
