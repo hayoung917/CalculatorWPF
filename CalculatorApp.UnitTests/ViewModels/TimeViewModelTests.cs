@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using CalculatorApp.Models;
 using CalculatorApp.ViewModels;
 using FluentAssertions;
@@ -9,6 +11,7 @@ namespace CalculatorApp.UnitTests.ViewModels
 {
     public class TimeViewModelTests
     {
+        #region ConvertedTimeViewModel
         public class TestSet_CovertedTimeViewModel_does_return_correctly : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
@@ -55,5 +58,27 @@ namespace CalculatorApp.UnitTests.ViewModels
             //Assert
             convertedModels.Should().BeEquivalentTo(expectedConvertedModels);
         }
+        #endregion
+
+        #region TimeViewModel
+       
+        [Theory]
+        [InlineData(5,TimeUnit.Microsecond)]
+        [InlineData(3.8, TimeUnit.Millisecond)]
+        [InlineData(30000, TimeUnit.Second)]
+        public void TimeViewModel_does_return_correctly(double expectedValue, TimeUnit expectedUnit)
+        {
+            //Arrange
+            var sut = new TimeViewModel(new Time { Value = expectedValue, Unit = expectedUnit });
+
+            //Act
+            TimeUnit resultUnit = sut.Unit;
+            double resultValue = sut.Value;
+
+            //Assert
+            resultValue.Should().Be(expectedValue);
+            resultUnit.Should().Be(expectedUnit);
+        }
+        #endregion
     }
 }
