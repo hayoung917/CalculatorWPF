@@ -34,11 +34,11 @@ namespace CalculatorApp.UnitTests.ViewModels
         //[InlineData("asdf", "asdf")]
         //[InlineData("0.", "0.")]
 
-        [InlineData("..0", "0")]
+        [InlineData("..0", " ")]
         [InlineData(null, " ")]
-        [InlineData("..555..", "0")]
-        [InlineData("hu8hgygyugt'';;[][]yu", "0")]
-        [InlineData("-99", "0")]
+        [InlineData("..555..", " ")]
+        [InlineData("hu8hgygyugt'';;[][]yu", " ")]
+        [InlineData("-99", " ")]
         public void Excute_of_InputCommand_does_return_correctly(string commandParameter, string expectedResult)
         {
             //Arrange
