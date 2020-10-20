@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using CalculatorApp.Models;
 using CalculatorApp.ViewModels;
 using FluentAssertions;
 using Saige.MVVM;
@@ -10,8 +13,6 @@ namespace CalculatorApp.UnitTests.ViewModels
 {
     public class MainViewModelTests
     {
-        //command test할것
-        //생성자 test할것
         #region Constructor
         [Fact]
         public void Constructor_does_construct()
@@ -28,10 +29,17 @@ namespace CalculatorApp.UnitTests.ViewModels
 
         #region command
         [Theory]
-        [InlineData("1","1")]
-        [InlineData("1258", "1258")]
-        [InlineData("asdf", "asdf")]
-        public void InputCommand_does_return_correctly(string commandParameter, string expectedResult)
+        //[InlineData("1","1")]
+        //[InlineData("1258", "1258")]
+        //[InlineData("asdf", "asdf")]
+        //[InlineData("0.", "0.")]
+
+        [InlineData("..0", "0")]
+        [InlineData(null, " ")]
+        [InlineData("..555..", "0")]
+        [InlineData("hu8hgygyugt'';;[][]yu", "0")]
+        [InlineData("-99", "0")]
+        public void Excute_of_InputCommand_does_return_correctly(string commandParameter, string expectedResult)
         {
             //Arrange
             var sut = new MainViewModel();
@@ -49,7 +57,7 @@ namespace CalculatorApp.UnitTests.ViewModels
         [InlineData("asdf", " ")]
         [InlineData("", " ")]
         [InlineData("2.586"," ")]
-        public void ClearCommand_does_return_correctly(string commandParameter, string expectedResult)
+        public void Excute_of_ClearCommand_does_return_correctly(string commandParameter, string expectedResult)
         {
             //Arrange
             var sut = new MainViewModel();
@@ -64,11 +72,14 @@ namespace CalculatorApp.UnitTests.ViewModels
         [Theory]
         [InlineData("1", " ")]
         [InlineData("1258", "125")]
+        [InlineData("12.", "12")]
         [InlineData("asdf", "asd")]
         [InlineData(" ", " ")]
         [InlineData("", " ")]
         [InlineData("hylee", "hyle")]
-        public void BackspaceCommand_does_return_correctly(string commandParameter, string expectedResult)
+        [InlineData(null, "")]
+        public void Excute_of_BackspaceCommand_does_return_correctly(
+            string commandParameter, string expectedResult)
         {
             //Arrange
             var sut = new MainViewModel();
@@ -81,6 +92,18 @@ namespace CalculatorApp.UnitTests.ViewModels
         }
         #endregion command
 
+        [Fact]
+        public void EnumUnits_does_return_EnumUnits()
+        {
+            //Arrange
+            var sut = new MainViewModel();
+            var expectedUnit = Enum.GetValues(typeof(TimeUnit));
 
+            //Act
+            var result = sut.Units;
+
+            //Assert
+            result.Should().BeEquivalentTo(expectedUnit);
+        }
     }
 }
