@@ -61,7 +61,6 @@ namespace CalculatorApp.UnitTests.ViewModels
         #endregion
 
         #region TimeViewModel
-       
         [Theory]
         [InlineData(5,TimeUnit.Microsecond)]
         [InlineData(3.8, TimeUnit.Millisecond)]
