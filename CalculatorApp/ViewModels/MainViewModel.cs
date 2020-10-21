@@ -53,23 +53,27 @@
         private void AppendDecimalPoint()
         {
             if (this.NumOutput.Contains(".") == false)
-            {
                 this.NumOutput += ".";
-            }
+        }
+
+        private void CheckDecimalPoint(string btnNum)
+        {
+            if (btnNum.Equals("."))
+                AppendDecimalPoint();
+            else
+                this.NumOutput += btnNum;
         }
 
         private void InputNumber(string btnNum)
         {
             if (double.TryParse(btnNum, out double number) && number >= 0)
-            {
-                if (btnNum.Equals("."))
-                    AppendDecimalPoint();
-                else
-                    this.NumOutput += btnNum;
-            }
+                CheckDecimalPoint(btnNum);
             else
             {
-                this.NumOutput = " ";
+                if (btnNum == ".")
+                    CheckDecimalPoint(btnNum);
+                else
+                    this.NumOutput = " ";
             }
         }
 

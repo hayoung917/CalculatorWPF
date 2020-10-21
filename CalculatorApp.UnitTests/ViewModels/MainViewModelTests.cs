@@ -28,6 +28,7 @@ namespace CalculatorApp.UnitTests.ViewModels
         [InlineData("1258", "1258")]
         [InlineData("asdf", " ")]
         [InlineData("0.", "0.")]
+        [InlineData(".5", ".5")]
         [InlineData("..0", " ")]
         [InlineData(null, " ")]
         [InlineData("..555..", " ")]
