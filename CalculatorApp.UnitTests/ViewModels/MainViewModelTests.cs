@@ -29,11 +29,10 @@ namespace CalculatorApp.UnitTests.ViewModels
 
         #region command
         [Theory]
-        //[InlineData("1","1")]
-        //[InlineData("1258", "1258")]
-        //[InlineData("asdf", "asdf")]
-        //[InlineData("0.", "0.")]
-
+        [InlineData("1", "1")]
+        [InlineData("1258", "1258")]
+        [InlineData("asdf", " ")]
+        [InlineData("0.", "0.")]
         [InlineData("..0", " ")]
         [InlineData(null, " ")]
         [InlineData("..555..", " ")]
@@ -57,6 +56,7 @@ namespace CalculatorApp.UnitTests.ViewModels
         [InlineData("asdf", " ")]
         [InlineData("", " ")]
         [InlineData("2.586"," ")]
+        [InlineData(null," ")]
         public void Excute_of_ClearCommand_does_return_correctly(string commandParameter, string expectedResult)
         {
             //Arrange
@@ -77,7 +77,7 @@ namespace CalculatorApp.UnitTests.ViewModels
         [InlineData(" ", " ")]
         [InlineData("", " ")]
         [InlineData("hylee", "hyle")]
-        [InlineData(null, "")]
+        [InlineData(null, " ")]
         public void Excute_of_BackspaceCommand_does_return_correctly(
             string commandParameter, string expectedResult)
         {

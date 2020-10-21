@@ -50,18 +50,30 @@
             this.ClearCommand = new RelayCommand(ClearNumber);
         }
 
+        private void AppendDecimalPoint()
+        {
+            if (this.NumOutput.Contains(".") == false)
+            {
+                this.NumOutput += ".";
+            }
+        }
+
         private void InputNumber(string btnNum)
         {
-            if (btnNum.Equals("."))
+            if (double.TryParse(btnNum, out double number) && number >= 0)
             {
-                if (this.NumOutput.Contains(".") == false)
+                if (btnNum.Equals("."))
+                {
+                    AppendDecimalPoint();
+                }
+                else
                 {
                     this.NumOutput += btnNum;
                 }
             }
             else
             {
-                this.NumOutput += btnNum;
+                this.NumOutput = " ";
             }
         }
 
@@ -72,16 +84,16 @@
 
         private void BackspaceNumber()
         {
-            int length = this.NumOutput.Length - 1;
+            int length = 0;
 
-            if (0 < length)
+            if (this.NumOutput != null)
             {
-                this.NumOutput = this.NumOutput.Substring(0, length);
+                length = this.NumOutput.Length - 1;
             }
             else
-            {
                 this.NumOutput = " ";
-            }
+
+            this.NumOutput = 0 < length ? this.NumOutput.Substring(0, length) : " ";
         }
 
         private void RemoveInvaildItem(List<TimeViewModel> resultList)
