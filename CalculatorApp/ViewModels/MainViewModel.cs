@@ -63,13 +63,9 @@
             if (double.TryParse(btnNum, out double number) && number >= 0)
             {
                 if (btnNum.Equals("."))
-                {
                     AppendDecimalPoint();
-                }
                 else
-                {
                     this.NumOutput += btnNum;
-                }
             }
             else
             {
