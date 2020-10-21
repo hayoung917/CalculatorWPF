@@ -82,7 +82,7 @@ namespace CalculatorApp.UnitTests.ViewModels
         [Fact]
         public void Constructor_does_coustruct_correctly_if_time_is_null()
         {
-            //Arrange\
+            //Arrange
             //Act
             var sut = new TimeViewModel(null);
 
