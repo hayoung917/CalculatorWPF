@@ -14,7 +14,7 @@ namespace CalculatorApp.UnitTests.Models
             public IEnumerator<object[]> GetEnumerator()
             {
                 yield return new object[] {
-                    1, TimeUnit.Microsecond, 
+                    1, TimeUnit.Microsecond,
                     new List<Time>{
                         new Time { Unit = TimeUnit.Microsecond, Value = 1},
                         new Time { Unit = TimeUnit.Millisecond, Value = 0.001},
@@ -54,7 +54,7 @@ namespace CalculatorApp.UnitTests.Models
 
             //Assert
             convertedTimes.Should().BeEquivalentTo(expectedConvertedTimes);
-        } 
+        }
         #endregion
     }
 }

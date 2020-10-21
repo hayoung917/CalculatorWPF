@@ -5,7 +5,7 @@
     using System.Globalization;
     using System.Windows.Data;
 
-    [SuppressMessage(null, "CA1812", Justification ="감지되지 않는 XAML에서 사용합니다.")]
+    [SuppressMessage(null, "CA1812", Justification = "감지되지 않는 XAML에서 사용합니다.")]
     public class IsWidthLessThanHeightConvert : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
 using CalculatorApp.Models;
 using CalculatorApp.ViewModels;
 using FluentAssertions;
@@ -62,7 +60,7 @@ namespace CalculatorApp.UnitTests.ViewModels
 
         #region TimeViewModel
         [Theory]
-        [InlineData(5,TimeUnit.Microsecond)]
+        [InlineData(5, TimeUnit.Microsecond)]
         [InlineData(3.8, TimeUnit.Millisecond)]
         [InlineData(30000, TimeUnit.Second)]
         public void Constructor_does_coustruct_correctly(

@@ -14,7 +14,7 @@ namespace CalculatorApp.UnitTests.Converters
         [InlineData(new object[] { 300, 600 }, null, null, null, true)]
         [InlineData(new object[] { 500, 350 }, null, null, null, false)]
         [InlineData(new object[] { 500.5d, 35.50d }, null, null, null, false)]
-        [InlineData(new object[] {"100","200" }, null, null, null, true)]
+        [InlineData(new object[] { "100", "200" }, null, null, null, true)]
         [InlineData(new object[] { "100.8", "200.9" }, null, null, null, false)]
         [InlineData(new object[] { "100.8", "200.9" }, null, "hjhj", null, false)]
         public void Convert_does_return_correctly(
