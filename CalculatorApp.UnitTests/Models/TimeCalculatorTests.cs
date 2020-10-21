@@ -40,7 +40,6 @@ namespace CalculatorApp.UnitTests.Models
                     }
                 };
             }
-
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
