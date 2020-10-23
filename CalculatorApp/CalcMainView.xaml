@@ -9,7 +9,7 @@
         Width="500"
         Height="600"
         mc:Ignorable="d">
-    <view:MainView>
+    <view:MainView x:Name="Calc">
         <view:MainView.DataContext>
             <vm:MainViewModel/>
         </view:MainView.DataContext>
