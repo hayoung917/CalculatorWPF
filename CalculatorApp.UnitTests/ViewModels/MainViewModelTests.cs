@@ -6,6 +6,9 @@ using Xunit;
 using Moq;
 using CalculatorApp.Service;
 using System.Runtime.CompilerServices;
+using FluentAssertions.Extensions;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CalculatorApp.UnitTests.ViewModels
 {
@@ -66,16 +69,16 @@ namespace CalculatorApp.UnitTests.ViewModels
 
         [Theory]
         [InlineData("1", " ")]
-        //[InlineData("1258", " ")]
-        //[InlineData("asdf", " ")]
-        //[InlineData("", " ")]
-        //[InlineData("2.586", " ")]
-        //[InlineData(null, " ")]
+        [InlineData("1258", " ")]
+        [InlineData("asdf", " ")]
+        [InlineData("", " ")]
+        [InlineData("2.586", " ")]
+        [InlineData(null, " ")]
         public void Excute_of_ClearCommand_does_return_correctly(string commandParameter, string expectedResult)
         {
             //Arrange
             Mock<IMessageService> mockService = new Mock<IMessageService>();
-            
+
             //mockService.Setup(x => x.ShowMessage(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             var sut = new MainViewModel(mockService.Object);
 
@@ -83,7 +86,8 @@ namespace CalculatorApp.UnitTests.ViewModels
             sut.ClearCommand.Execute(commandParameter);
 
             //Assert
-            mockService.Verify(q => q.ShowMessage(It.IsAny<string>(), It.IsAny<string>()),Times.Exactly(5));
+            mockService.Verify(q => q.ShowMessage(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(5));
+
         }
 
         [Theory]
