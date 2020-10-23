@@ -3,6 +3,9 @@ using CalculatorApp.Models;
 using CalculatorApp.ViewModels;
 using FluentAssertions;
 using Xunit;
+using Moq;
+using CalculatorApp.Service;
+using System.Runtime.CompilerServices;
 
 namespace CalculatorApp.UnitTests.ViewModels
 {
@@ -12,13 +15,27 @@ namespace CalculatorApp.UnitTests.ViewModels
         [Fact]
         public void Constructor_does_construct()
         {
-            //Arrange
+            //Arrange 
+            Mock<IMessageService> stubService = new Mock<IMessageService>();
 
             //Act
-            var sut = new Action(() => new MainViewModel());
+            //var creating = new Action(() => new MainViewModel(stubService.Object));
+            var sut = new MainViewModel(stubService.Object);
 
             //Assert
-            sut.Should().NotThrow();
+            //sut.Should().NotThrow();
+            sut.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void Constructor_does_throw_argumentnullexeption_if_parameter_is_null()
+        {
+            //Arrange 
+            //Act
+            var sut = new Action(() => new MainViewModel(null));
+
+            //Assert
+            sut.Should().Throw<ArgumentNullException>();
         }
         #endregion
 
@@ -37,7 +54,8 @@ namespace CalculatorApp.UnitTests.ViewModels
         public void Excute_of_InputCommand_does_return_correctly(string commandParameter, string expectedResult)
         {
             //Arrange
-            var sut = new MainViewModel();
+            Mock<IMessageService> stubService = new Mock<IMessageService>();
+            var sut = new MainViewModel(stubService.Object);
 
             //Act
             sut.InputCommand.Execute(commandParameter);
@@ -48,21 +66,24 @@ namespace CalculatorApp.UnitTests.ViewModels
 
         [Theory]
         [InlineData("1", " ")]
-        [InlineData("1258", " ")]
-        [InlineData("asdf", " ")]
-        [InlineData("", " ")]
-        [InlineData("2.586", " ")]
-        [InlineData(null, " ")]
+        //[InlineData("1258", " ")]
+        //[InlineData("asdf", " ")]
+        //[InlineData("", " ")]
+        //[InlineData("2.586", " ")]
+        //[InlineData(null, " ")]
         public void Excute_of_ClearCommand_does_return_correctly(string commandParameter, string expectedResult)
         {
             //Arrange
-            var sut = new MainViewModel();
+            Mock<IMessageService> mockService = new Mock<IMessageService>();
+            
+            //mockService.Setup(x => x.ShowMessage(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+            var sut = new MainViewModel(mockService.Object);
 
             //Act
             sut.ClearCommand.Execute(commandParameter);
 
             //Assert
-            sut.NumOutput.Should().Be(expectedResult);
+            mockService.Verify(q => q.ShowMessage(It.IsAny<string>(), It.IsAny<string>()),Times.Exactly(5));
         }
 
         [Theory]
@@ -78,7 +99,8 @@ namespace CalculatorApp.UnitTests.ViewModels
             string commandParameter, string expectedResult)
         {
             //Arrange
-            var sut = new MainViewModel();
+            Mock<IMessageService> stubService = new Mock<IMessageService>();
+            var sut = new MainViewModel(stubService.Object);
             sut.NumOutput = commandParameter;
             //Act
             sut.BackspaceCommand.Execute(sut.NumOutput);
@@ -92,7 +114,8 @@ namespace CalculatorApp.UnitTests.ViewModels
         public void EnumUnits_does_return_EnumUnits()
         {
             //Arrange
-            var sut = new MainViewModel();
+            Mock<IMessageService> stubService = new Mock<IMessageService>();
+            var sut = new MainViewModel(stubService.Object);
             var expectedUnit = Enum.GetValues(typeof(TimeUnit));
 
             //Act

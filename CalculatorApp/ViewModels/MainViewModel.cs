@@ -6,6 +6,7 @@
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
     using CalculatorApp.Models;
+    using CalculatorApp.Service;
     using Saige.MVVM;
 
     public class MainViewModel : ViewModel
@@ -40,14 +41,23 @@
         public ICommand InputCommand { get; }
         public ICommand BackspaceCommand { get; }
         public ICommand ClearCommand { get; }
+        public IMessageService MessageService { get; }
         #endregion
+
+        public MainViewModel(IMessageService messageService)
+            : this()
+        {
+            this.MessageService = messageService ?? throw new ArgumentNullException(nameof(messageService));
+        }
 
         public MainViewModel()
         {
+
             this.Units = Enum.GetValues(typeof(TimeUnit)).OfType<TimeUnit>().ToArray();
             this.InputCommand = new RelayCommand<string>(InputNumber);
             this.BackspaceCommand = new RelayCommand(BackspaceNumber);
             this.ClearCommand = new RelayCommand(ClearNumber);
+
         }
 
         private void AppendDecimalPoint()
@@ -79,7 +89,11 @@
 
         private void ClearNumber()
         {
-            this.NumOutput = " ";
+            this.MessageService.ShowMessage("시간", "확인");
+            this.MessageService.ShowMessage("시간", "확인");
+            this.MessageService.ShowMessage("시간", "확인");
+            this.MessageService.ShowMessage("시간", "확인");
+            this.MessageService.ShowMessage("시간", "확인");
         }
 
         private void BackspaceNumber()
